@@ -7,12 +7,13 @@ to run the GUI:
 example batch script:
 
     docker run --rm -w /foo -v $(pwd):/foo bryanlarsen/gimp-2.10 gimp -i -d -f -b '(let* (
-     (filename "in.jpg")
-     (outfile "out.jpg")
-     (image (car (gimp-file-load RUN-NONINTERACTIVE filename filename)))
-       (gimp-image-convert-color-profile-from-file image "file:///foo/AdobeRGB1998.icc" 1 TRUE)
-       (gimp-file-save RUN-NONINTERACTIVE image drawable outfile outfile)
-       (gimp-image-delete image))' -b '(gimp-quit 0)'
+       (filename "in.jpg")
+       (outfile "out.jpg")
+       (image (car (gimp-file-load RUN-NONINTERACTIVE filename filename)))
+       (drawable (car (gimp-image-get-active-layer image))))
+      (gimp-image-convert-color-profile-from-file image "file:///foo/AdobeRGB1998.icc" 1 TRUE)
+      (gimp-file-save RUN-NONINTERACTIVE image drawable outfile outfile)
+      (gimp-image-delete image))' -b '(gimp-quit 0)'
 
 ## Dockerfile
 
